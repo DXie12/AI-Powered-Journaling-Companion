@@ -1,0 +1,566 @@
+package com.mycompany.job;
+
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+/**
+ *
+ * @author dxie1
+ */
+import java.util.Random;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import java.util.Arrays;
+
+public class Application_Frame extends javax.swing.JFrame {
+
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Application_Frame.class.getName());
+
+    /**
+     * Creates new form Application_Frame
+     */
+    public Application_Frame() {
+        initComponents();
+        int counter = 0; //start a counter for streaks
+        Random rand = new Random();
+        int index = rand.nextInt(CArray.cprompts.length);
+        int index2 = rand.nextInt(JArray.jprompts.length);
+        int index3 = rand.nextInt(JArray.excerprompts.length);
+        int index4 = rand.nextInt(JArray.eatprompts.length);
+        int index5 = rand.nextInt(JArray.stressprompts.length);
+        Cprompt.setText("<html><p>" + CArray.cprompts[index] + "</p></html>"); //gets a random prompt
+        File file = new File("output.txt");
+        Encrypt cipher = new Encrypt(15); //the decrypt key
+        String[] wordToFind = SynArray.excersyn;
+        String[] wordToFind2 = SynArray.eatsyn;
+        String[] wordToFind3 = SynArray.stresssyn;
+        boolean found = false;
+        boolean found2 = false;
+        boolean found3 = false;
+
+        File countFile = new File("counter.txt");
+        if (countFile.exists() && countFile.length() > 0) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(countFile))) { //read the counter file
+                String line = reader.readLine();
+                if (line != null && !line.isEmpty()) {
+                    counter = Integer.parseInt(line.trim());
+                    Streak.setText("Streak: " + String.valueOf(counter));
+                }
+            } catch (IOException | NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        counter++;
+        try {
+            // Open file in append mode (true)
+
+            FileWriter count = new FileWriter("counter.txt");
+            count.write(String.valueOf(counter)); //write the new streak into the counter file
+            count.close();
+
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error writing file: " + ex.getMessage());
+        }
+
+        if (file.exists() && file.length() > 0) {
+            try (BufferedReader reader = new BufferedReader(new FileReader("output.txt"))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String decrypt = cipher.decrypt(line);
+                    for (String word : wordToFind) {        // loop through each word
+                        if (decrypt.contains(word)) {          // check if line contains this word
+                            found = true;
+                            break;                          // stop inner loop if found
+                        }
+                    }
+                    for (String word : wordToFind2) {        // loop through each word
+                        if (decrypt.contains(word)) {          // check if line contains this word
+                            found2 = true;
+                            break;                          // stop inner loop if found
+                        }
+                    }
+
+                    for (String word : wordToFind3) {        // loop through each word
+                        if (decrypt.contains(word)) {          // check if line contains this word
+                            found3 = true;
+                            break;                          // stop inner loop if found
+                        }
+                    }
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            if (found) {
+                Jprompt.setText("<html><p>" + JArray.excerprompts[index3] + "</p></html>");
+            } else if (found2) {
+                Jprompt.setText("<html><p>" + JArray.eatprompts[index4] + "</p></html>");
+            } else if (found3) {
+                Jprompt.setText("<html><p>" + JArray.stressprompts[index5] + "</p></html>");
+            } else {
+                Jprompt.setText("<html><p>" + JArray.jprompts[index2] + "</p></html>");
+            }
+
+        } else {
+            Jprompt.setText("<html><p>" + JArray.jprompts[index2] + "</p></html>");
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        BackGround = new javax.swing.JPanel();
+        Loginpg = new javax.swing.JPanel();
+        Login = new javax.swing.JButton();
+        User = new javax.swing.JTextField();
+        Create = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        Password = new javax.swing.JPasswordField();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        Createacct = new javax.swing.JPanel();
+        Createuser = new javax.swing.JTextField();
+        Create_button = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        create_back = new javax.swing.JButton();
+        password = new javax.swing.JPasswordField();
+        retypepass = new javax.swing.JPasswordField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        Creative_Writing = new javax.swing.JPanel();
+        CTitle = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        C_Write = new javax.swing.JTextArea();
+        Next_Button = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        Cprompt = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        Prompts = new javax.swing.JPanel();
+        Back_Button = new javax.swing.JButton();
+        Jtitle = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        Jprompt = new javax.swing.JLabel();
+        Done = new javax.swing.JButton();
+        Streak = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        BackGround.setBackground(new java.awt.Color(255, 255, 255));
+        BackGround.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white, java.awt.Color.white));
+        BackGround.setLayout(new java.awt.CardLayout());
+
+        Loginpg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Login.setText("Login");
+        Login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginActionPerformed(evt);
+            }
+        });
+        Loginpg.add(Login, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 460, -1, -1));
+
+        User.setText("Username");
+        Loginpg.add(User, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 340, 190, -1));
+
+        Create.setText("Create");
+        Create.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreateActionPerformed(evt);
+            }
+        });
+        Loginpg.add(Create, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 560, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 12)); // NOI18N
+        jLabel1.setText("Don't have an account?");
+        Loginpg.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 520, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Comic Sans MS", 3, 24)); // NOI18N
+        jLabel4.setText("Drift Journal ");
+        Loginpg.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 100, -1, -1));
+
+        Password.setText("jPasswordField1");
+        Loginpg.add(Password, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 390, 190, -1));
+
+        jLabel14.setIcon(new javax.swing.ImageIcon("C:\\Users\\dxie1\\Documents\\NetBeansProjects\\Job\\src\\main\\java\\com\\mycompany\\Images\\Pink_Yellow_Illustration_Cute_Flower_Notebook_Digital_Cover.png")); // NOI18N
+        jLabel14.setText("  ");
+        Loginpg.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 680, 740));
+
+        jLabel13.setIcon(new javax.swing.ImageIcon("C:\\Users\\dxie1\\Documents\\NetBeansProjects\\Job\\src\\main\\java\\com\\mycompany\\Images\\desk.jpg")); // NOI18N
+        jLabel13.setText("  ");
+        Loginpg.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 790));
+
+        BackGround.add(Loginpg, "card4");
+
+        Createacct.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Createuser.setText("Username");
+        Createacct.add(Createuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 370, 181, -1));
+
+        Create_button.setText("Create");
+        Create_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Create_buttonActionPerformed(evt);
+            }
+        });
+        Createacct.add(Create_button, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 550, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
+        jLabel2.setText("Create Your Account");
+        Createacct.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 130, -1, -1));
+
+        create_back.setText("Back");
+        create_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                create_backActionPerformed(evt);
+            }
+        });
+        Createacct.add(create_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 550, -1, -1));
+
+        password.setText("jPasswordField1");
+        Createacct.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, 181, -1));
+
+        retypepass.setText("jPasswordField2");
+        retypepass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                retypepassActionPerformed(evt);
+            }
+        });
+        Createacct.add(retypepass, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 480, 181, -1));
+
+        jLabel5.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        jLabel5.setText("Username");
+        Createacct.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 340, 121, -1));
+
+        jLabel6.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        jLabel6.setText("Password");
+        Createacct.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 390, 132, -1));
+
+        jLabel7.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        jLabel7.setText("Retype Password");
+        Createacct.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 450, -1, -1));
+
+        jLabel12.setIcon(new javax.swing.ImageIcon("C:\\Users\\dxie1\\Documents\\NetBeansProjects\\Job\\src\\main\\java\\com\\mycompany\\Images\\199c7170-e884-4639-ae31-a90c1fc00961.png")); // NOI18N
+        jLabel12.setText("  ");
+        Createacct.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 270, -1, -1));
+
+        jLabel15.setIcon(new javax.swing.ImageIcon("C:\\Users\\dxie1\\Documents\\NetBeansProjects\\Job\\src\\main\\java\\com\\mycompany\\Images\\Pink_Yellow_Illustration_Cute_Flower_Notebook_Digital_Cover.png")); // NOI18N
+        jLabel15.setText("  ");
+        Createacct.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 680, 740));
+
+        jLabel16.setIcon(new javax.swing.ImageIcon("C:\\Users\\dxie1\\Documents\\NetBeansProjects\\Job\\src\\main\\java\\com\\mycompany\\Images\\desk.jpg")); // NOI18N
+        jLabel16.setText("  ");
+        Createacct.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 790));
+
+        BackGround.add(Createacct, "card5");
+
+        Creative_Writing.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        CTitle.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
+        CTitle.setText("Creative Writing");
+        Creative_Writing.add(CTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 205, 40));
+
+        C_Write.setColumns(20);
+        C_Write.setRows(5);
+        jScrollPane2.setViewportView(C_Write);
+
+        Creative_Writing.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 40, 490, 700));
+
+        Next_Button.setText("Next");
+        Next_Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Next_ButtonActionPerformed(evt);
+            }
+        });
+        Creative_Writing.add(Next_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 460, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        jLabel3.setText("<html><p>(Optional) Before we get started with journaling, let's warm up our minds with some creative writing! Don't worry about grammar or who's going to read it, use your imagination and create the most absurd story that you can!</p></html>");
+        Creative_Writing.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 440, 140));
+
+        Cprompt.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        Cprompt.setText("jLabel2");
+        Creative_Writing.add(Cprompt, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 320, 460, 120));
+
+        jLabel11.setIcon(new javax.swing.ImageIcon("C:\\Users\\dxie1\\Documents\\NetBeansProjects\\Job\\src\\main\\java\\com\\mycompany\\Images\\Screenshot 2025-09-04 013136.png")); // NOI18N
+        jLabel11.setText("  ");
+        Creative_Writing.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 500, 490, 250));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\dxie1\\Documents\\NetBeansProjects\\Job\\src\\main\\java\\com\\mycompany\\Images\\1_1_spread.png")); // NOI18N
+        jLabel8.setText("    ");
+        Creative_Writing.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 790));
+
+        BackGround.add(Creative_Writing, "card2");
+
+        Prompts.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Back_Button.setText("Back");
+        Back_Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Back_ButtonActionPerformed(evt);
+            }
+        });
+        Prompts.add(Back_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 480, -1, -1));
+
+        Jtitle.setFont(new java.awt.Font("Comic Sans MS", 0, 24)); // NOI18N
+        Jtitle.setText("Journaling");
+        Prompts.add(Jtitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, -1));
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        Prompts.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 40, 440, 720));
+
+        Jprompt.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        Jprompt.setText("jLabel1");
+        Prompts.add(Jprompt, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 480, 140));
+
+        Done.setText("Done");
+        Done.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DoneActionPerformed(evt);
+            }
+        });
+        Prompts.add(Done, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 480, -1, -1));
+
+        Streak.setFont(new java.awt.Font("Comic Sans MS", 0, 18)); // NOI18N
+        Streak.setText("Streak: 0");
+        Prompts.add(Streak, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 90, 97, -1));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon("C:\\Users\\dxie1\\Documents\\NetBeansProjects\\Job\\src\\main\\java\\com\\mycompany\\Images\\Screenshot 2025-09-04 013136.png")); // NOI18N
+        jLabel10.setText("    ");
+        Prompts.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 520, 490, 230));
+
+        jLabel9.setIcon(new javax.swing.ImageIcon("C:\\Users\\dxie1\\Documents\\NetBeansProjects\\Job\\src\\main\\java\\com\\mycompany\\Images\\1_1_spread.png")); // NOI18N
+        jLabel9.setText("jLabel9");
+        Prompts.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1170, 790));
+
+        BackGround.add(Prompts, "card3");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(BackGround, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(BackGround, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void Next_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Next_ButtonActionPerformed
+        Creative_Writing.setVisible(false);
+        Loginpg.setVisible(false);
+        Prompts.setVisible(true);
+        Createacct.setVisible(false);
+    }//GEN-LAST:event_Next_ButtonActionPerformed
+
+    private void Back_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Back_ButtonActionPerformed
+        Creative_Writing.setVisible(true);
+        Loginpg.setVisible(false);
+        Prompts.setVisible(false);
+        Createacct.setVisible(false);
+    }//GEN-LAST:event_Back_ButtonActionPerformed
+
+    private void DoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DoneActionPerformed
+        String content = jTextArea1.getText();
+        content = content.toLowerCase();
+        Encrypt cipher = new Encrypt(15); //key to encrypt file content
+        String encryptedContent = cipher.encrypt(content);
+        try {
+            // Open file in append mode (true)
+            FileWriter writer = new FileWriter("output.txt", true);
+            writer.write(System.lineSeparator() + encryptedContent); // add newline after each entry
+
+            writer.close();
+            JOptionPane.showMessageDialog(null, "Journal Saved!");
+
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error writing file: " + ex.getMessage());
+        }
+
+        System.exit(0);
+
+    }//GEN-LAST:event_DoneActionPerformed
+
+    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
+
+        String user = User.getText();
+        String pass = new String(Password.getPassword());
+        Encrypt cipher = new Encrypt(9);
+        for (int i = 0; i < Logins.users.length; i++) {
+            String decryptedUser = cipher.decrypt(Logins.users[i]);
+            String decryptedPass = cipher.decrypt(Logins.passwords[i]);
+            if (user.equals(decryptedUser) && pass.equals(decryptedPass)) { //need to see the the user and password in the arrays match to log in
+                Creative_Writing.setVisible(true);
+                Prompts.setVisible(false);
+                Createacct.setVisible(false);
+                Loginpg.setVisible(false);
+                break;
+            }
+            if (i == Logins.users.length) {
+                JOptionPane.showMessageDialog(null, "User and Password Don't Match!");
+            }
+        }
+
+    }//GEN-LAST:event_LoginActionPerformed
+
+    private void Create_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Create_buttonActionPerformed
+        String user = Createuser.getText();
+        String pass = new String(password.getPassword());
+        String retyped = new String(retypepass.getPassword());
+        user = user.toLowerCase();
+        pass = pass.toLowerCase();
+        retyped = retyped.toLowerCase();
+        Encrypt cipher = new Encrypt(9);
+        String encryptedUser = cipher.encrypt(user);
+        String encryptedPass = cipher.encrypt(pass);
+
+        Logins.adduser(encryptedUser);
+        if (pass.equals(retyped)) { //check if password and retyped passwords match
+            Logins.addpass(encryptedPass);
+            try {
+                // Open file in append mode (true)
+                FileWriter writer = new FileWriter("user.txt", true); //write the user and password into the file
+                writer.write(encryptedUser + System.lineSeparator() + encryptedPass); // add newline after each entry
+                writer.close();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Error writing file: " + ex.getMessage());
+            }
+            System.out.println(Arrays.toString(Logins.users));     // 
+            System.out.println(Arrays.toString(Logins.passwords)); // 
+        } else {
+            JOptionPane.showMessageDialog(null, "Passwords do not match!");
+        }
+
+        Createacct.setVisible(false);
+        Creative_Writing.setVisible(false);
+        Prompts.setVisible(false);
+        Loginpg.setVisible(true);
+    }//GEN-LAST:event_Create_buttonActionPerformed
+
+    private void CreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateActionPerformed
+        Createacct.setVisible(true);
+        Creative_Writing.setVisible(false);
+        Prompts.setVisible(false);
+        Loginpg.setVisible(false);
+    }//GEN-LAST:event_CreateActionPerformed
+
+    private void create_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_create_backActionPerformed
+        Createacct.setVisible(false);
+        Creative_Writing.setVisible(false);
+        Prompts.setVisible(false);
+        Loginpg.setVisible(true);
+    }//GEN-LAST:event_create_backActionPerformed
+
+    private void retypepassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retypepassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_retypepassActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> new Application_Frame().setVisible(true));
+
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel BackGround;
+    private javax.swing.JButton Back_Button;
+    private javax.swing.JLabel CTitle;
+    private javax.swing.JTextArea C_Write;
+    private javax.swing.JLabel Cprompt;
+    private javax.swing.JButton Create;
+    private javax.swing.JButton Create_button;
+    private javax.swing.JPanel Createacct;
+    private javax.swing.JTextField Createuser;
+    private javax.swing.JPanel Creative_Writing;
+    private javax.swing.JButton Done;
+    private javax.swing.JLabel Jprompt;
+    private javax.swing.JLabel Jtitle;
+    private javax.swing.JButton Login;
+    private javax.swing.JPanel Loginpg;
+    private javax.swing.JButton Next_Button;
+    private javax.swing.JPasswordField Password;
+    private javax.swing.JPanel Prompts;
+    private javax.swing.JLabel Streak;
+    private javax.swing.JTextField User;
+    private javax.swing.JButton create_back;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JPasswordField password;
+    private javax.swing.JPasswordField retypepass;
+    // End of variables declaration//GEN-END:variables
+}
